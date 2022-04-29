@@ -2233,7 +2233,10 @@ static size_t vk_device_create_info_type_size(
         return sizeof(VkPhysicalDeviceVulkanMemoryModelFeatures);
     case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_YCBCR_IMAGE_ARRAYS_FEATURES_EXT:
         return sizeof(VkPhysicalDeviceYcbcrImageArraysFeaturesEXT);
+    case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES_KHR:
+        return sizeof(VkPhysicalDeviceSynchronization2Features);
     default:
+        printf("Unknown structure for VkDeviceCreateInfo::pNext\n");
         unreachable("Unknown structure for VkDeviceCreateInfo::pNext");
     }
     return 0;
