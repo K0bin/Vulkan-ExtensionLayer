@@ -64,51 +64,6 @@ LOCAL_LDFLAGS   += -Wl,-Bsymbolic
 LOCAL_LDFLAGS   += -Wl,--exclude-libs,ALL
 include $(BUILD_SHARED_LIBRARY)
 
-include $(CLEAR_VARS)
-LOCAL_MODULE := VkExtensionLayerTests
-LOCAL_SRC_FILES += $(SRC_DIR)/tests/extension_layer_tests.cpp \
-                   $(SRC_DIR)/tests/vktestbinding.cpp \
-                   $(SRC_DIR)/tests/synchronization2_tests.cpp \
-                   $(SRC_DIR)/tests/vkrenderframework.cpp \
-                   $(SRC_DIR)/tests/vktestframeworkandroid.cpp \
-                   $(SRC_DIR)/tests/test_environment.cpp
-LOCAL_C_INCLUDES += $(VULKAN_INCLUDE) \
-                    $(LOCAL_PATH)/$(SRC_DIR)/utils/generated \
-                    $(LOCAL_PATH)/$(SRC_DIR)/utils \
-                    $(LOCAL_PATH)/$(SRC_DIR)/libs \
-                    $(LOCAL_PATH)/$(THIRD_PARTY)/Vulkan-Tools/common
-
-LOCAL_STATIC_LIBRARIES := googletest_main extlayer_utils shaderc
-LOCAL_CPPFLAGS += -std=c++11 -DVK_PROTOTYPES -Wall -Werror -Wno-unused-function -Wno-unused-const-variable
-LOCAL_CPPFLAGS += -DVK_ENABLE_BETA_EXTENSIONS -DVK_USE_PLATFORM_ANDROID_KHR -DNV_EXTENSIONS -DAMD_EXTENSIONS -fvisibility=hidden
-LOCAL_LDLIBS := -llog -landroid -ldl
-LOCAL_LDFLAGS   += -Wl,-Bsymbolic
-LOCAL_LDFLAGS   += -Wl,--exclude-libs,ALL
-include $(BUILD_EXECUTABLE)
-
-# Note: The following module is similar in name to the executable, but differs so that loader won't enumerate the resulting .so
-include $(CLEAR_VARS)
-LOCAL_MODULE := VulkanExtensionLayerTests
-LOCAL_SRC_FILES += $(SRC_DIR)/tests/extension_layer_tests.cpp \
-                   $(SRC_DIR)/tests/vktestbinding.cpp \
-                   $(SRC_DIR)/tests/synchronization2_tests.cpp \
-                   $(SRC_DIR)/tests/vkrenderframework.cpp \
-                   $(SRC_DIR)/tests/vktestframeworkandroid.cpp \
-                   $(SRC_DIR)/tests/test_environment.cpp
-LOCAL_C_INCLUDES += $(VULKAN_INCLUDE) \
-                    $(LOCAL_PATH)/$(SRC_DIR)/utils/generated \
-                    $(LOCAL_PATH)/$(SRC_DIR)/utils \
-                    $(LOCAL_PATH)/$(SRC_DIR)/libs \
-                    $(LOCAL_PATH)/$(THIRD_PARTY)/Vulkan-Tools/common
-
-LOCAL_STATIC_LIBRARIES := googletest_main extlayer_utils shaderc
-LOCAL_CPPFLAGS += -std=c++11 -DVK_PROTOTYPES -Wall -Werror -Wno-unused-function -Wno-unused-const-variable
-LOCAL_CPPFLAGS += -DVK_ENABLE_BETA_EXTENSIONS -DVK_USE_PLATFORM_ANDROID_KHR -DNV_EXTENSIONS -DAMD_EXTENSIONS -fvisibility=hidden -DVALIDATION_APK
-LOCAL_WHOLE_STATIC_LIBRARIES += android_native_app_glue
-LOCAL_LDLIBS := -llog -landroid -ldl
-LOCAL_LDFLAGS := -u ANativeActivity_onCreate
-include $(BUILD_SHARED_LIBRARY)
-
 $(call import-module,android/native_app_glue)
 $(call import-module,third_party/googletest)
 $(call import-module,third_party/shaderc)
