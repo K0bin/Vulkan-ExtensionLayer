@@ -43,7 +43,20 @@ LOCAL_C_INCLUDES += $(VULKAN_INCLUDE) \
                     $(LOCAL_PATH)/$(SRC_DIR)/utils \
                     $(LOCAL_PATH)/$(SRC_DIR)/utils/generated \
                     $(LOCAL_PATH)/$(THIRD_PARTY)/shaderc/third_party/spirv-tools/external/spirv-headers/include
-LOCAL_STATIC_LIBRARIES += extlayer_utils glslang SPIRV-Tools SPIRV-Tools-opt
+LOCAL_STATIC_LIBRARIES += extlayer_utils
+LOCAL_CPPFLAGS += -std=c++11 -Wall -Werror -Wno-unused-function -Wno-unused-const-variable -Wno-cast-calling-convention -fexceptions
+LOCAL_CPPFLAGS += -DVK_ENABLE_BETA_EXTENSIONS -DVK_USE_PLATFORM_ANDROID_KHR -DVK_PROTOTYPES -fvisibility=hidden
+LOCAL_LDLIBS    := -llog -landroid
+LOCAL_LDFLAGS   += -Wl,-Bsymbolic
+LOCAL_LDFLAGS   += -Wl,--exclude-libs,ALL
+include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := VkLayer_khronos_timeline_semaphore
+LOCAL_SRC_FILES += $(SRC_DIR)/layers/timeline_semaphore.c \
+                   $(SRC_DIR)/layers/hash_table.cpp
+LOCAL_C_INCLUDES += $(VULKAN_INCLUDE)
+LOCAL_STATIC_LIBRARIES += extlayer_utils
 LOCAL_CPPFLAGS += -std=c++11 -Wall -Werror -Wno-unused-function -Wno-unused-const-variable -Wno-cast-calling-convention -fexceptions
 LOCAL_CPPFLAGS += -DVK_ENABLE_BETA_EXTENSIONS -DVK_USE_PLATFORM_ANDROID_KHR -DVK_PROTOTYPES -fvisibility=hidden
 LOCAL_LDLIBS    := -llog -landroid
