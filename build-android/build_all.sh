@@ -60,14 +60,5 @@ function create_APK() {
 # build layers
 #
 ./update_external_sources_android.sh --no-build
-ndk-build -j $cores
+~/Android/Sdk/ndk/22.1.7171670/build/ndk-build -j $cores
 
-#
-# build VulkanExtensionLayerTests APK
-#
-mkdir -p bin/libs/lib
-cp -r $LAYER_BUILD_DIR/libs/* $LAYER_BUILD_DIR/bin/libs/lib/
-create_APK VulkanExtensionLayerTests
-
-echo Builds succeeded
-exit 0
